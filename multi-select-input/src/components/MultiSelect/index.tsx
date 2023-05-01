@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 export type SelectOption = {
   label: string
@@ -30,7 +30,7 @@ const MultiSelect = ({ multiple, value, onChange, options }: SelectProps) => {
     multiple ? onChange([]) : onChange(undefined)
   }
 
-  function selectOption(option: SelectOption) {
+  const selectOption = useCallback((option: SelectOption) => {
     if (multiple) {
       if (value.includes(option)) {
         onChange(value.filter(o => o !== option))
@@ -40,7 +40,8 @@ const MultiSelect = ({ multiple, value, onChange, options }: SelectProps) => {
     } else {
       if (option !== value) onChange(option)
     }
-  }
+  }, [multiple, value, onChange])
+
 
   function isOptionSelected(option: SelectOption) {
     return multiple ? value.includes(option) : option === value
@@ -74,6 +75,8 @@ const MultiSelect = ({ multiple, value, onChange, options }: SelectProps) => {
         }
         case "Escape":
           setIsOpen(false)
+          break
+        default:
           break
       }
     }
@@ -124,9 +127,11 @@ const MultiSelect = ({ multiple, value, onChange, options }: SelectProps) => {
 
         </button>
         <div className="divider" />
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="caret">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="caret">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
         </svg>
+
       </div>
       <ul className={`options ${isOpen ? 'show' : ""}`}>
         {options.map((option, index) => (
