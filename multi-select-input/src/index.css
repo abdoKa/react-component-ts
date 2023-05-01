@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #081c15;
+  --color-secondary: #d7f4dc;
+  --color-success: #28a745;
+  --color-danger: #dc3545;
+  --color-warning: #ffc107;
+  --color-info: #17a2b8;
+  --color-light: #f8f9fa;
+  --color-dark: #343a40;
+  --default-font: "Roboto", sans-serif;
+}
+
+body {
+  font-family: var(--default-font);
+  @apply bg-[#081c15] text-[#d7f4dc] flex items-center justify-center h-screen;
+}
+
+@layer components {
+  .default-border-color {
+    border-color: var(--color-secondary);
+    color: var(--color-primary);
+  }
+
+  .bg-secondary {
+    background: var(--color-secondary);
+  }
+  .bg-primary {
+    background: var(--color-primary);
+  }
+  .text-primary {
+    color: var(--color-primary);
+  }
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+
+  .border-secondary {
+    border-color: var(--color-secondary);
+  }
+
+  .border-t-secondary {
+    border-top: 1px solid var(--color-secondary);
+  }
+
+  .bg-select-value {
+    background: var(--color-dark);
+  }
+
+  .rounded-24 {
+    border-raduis: var(--boreder-raduis-24);
+  }
+}
+
+.select-container {
+  @apply cursor-pointer justify-between  relative w-full min-w-[270px] min-h-[1rem] border default-border-color flex items-center gap-2 p-2 rounded-md outline-none;
+}
+
+.select-container:focus {
+  @apply bg-primary;
+}
+
+.value {
+  @apply flex items-center gap-2 flex-row;
+}
+
+.clear-btn {
+  @apply text-secondary;
+}
+
+.clear-btn svg {
+  @apply w-6 h-6;
+}
+.clear-btn svg:hover,
+.clear-btn svg:focus {
+  @apply bg-secondary text-primary rounded-full w-6 h-6;
+}
+
+.divider {
+  @apply bg-white self-stretch w-0.5;
+}
+
+.caret {
+  @apply text-secondary w-6 h-6;
+}
+
+.options {
+  @apply text-secondary absolute m-0 p-0 list-none hidden max-h-60 overflow-y-auto border border-secondary rounded-md w-full left-0 top-full bg-primary z-50;
+}
+
+.options.show {
+  @apply block;
+}
+
+.option {
+  @apply py-1 px-2 cursor-pointer;
+}
+
+.option.selected {
+  @apply bg-green-300 text-primary;
+}
+
+.option.highlighted {
+  @apply bg-secondary text-primary;
+}
+
+.option-badge {
+  @apply flex items-center border-2 border-secondary rounded-md py-0.5 px-1 gap-2 cursor-pointer bg-transparent outline-none text-secondary;
+}
+
+.option-badge:hover,
+.option-badge:focus {
+  @apply bg-secondary border-primary text-primary;
+}
+
+.option-badge:hover > .remove-btn,
+.option-badge:focus > .remove-btn {
+  @apply text-primary;
+}
+
+.option-badge > .remove-btn {
+  @apply text-lg text-secondary;
+}
