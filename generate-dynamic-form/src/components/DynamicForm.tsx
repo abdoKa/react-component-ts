@@ -1,53 +1,9 @@
 import React from 'react';
-import { useForm, FieldValues, DeepPartial } from 'react-hook-form';
+import { useForm, FieldValues} from 'react-hook-form';
 import { z } from 'zod';
+import WidgetComponents from '../widgets/WidgetComponents';
+import { DynamicFormProps } from '../interfaces';
 
-export interface FormField {
-  name: string;
-  label: string;
-  type: 'text' | 'number' | 'email' | 'checkbox' | 'radio' | 'select';
-  required: boolean;
-  options?: { label: string; value: string }[];
-}
-
-interface WidgetProps {
-  id: string;
-  name: string;
-  register: any;
-  options?: { label: string; value: string }[];
-}
-
-interface WidgetMap {
-  [key: string]: React.ComponentType<WidgetProps>;
-}
-
-const WidgetComponents: WidgetMap = {
-  text: ({ id, name, register }) => <input type="text" id={id} name={name} {...register(name)} />,
-  number: ({ id, name, register }) => <input type="number" id={id} name={name} {...register(name)} />,
-  email: ({ id, name, register }) => <input type="email" id={id} name={name} {...register(name)} />,
-  checkbox: ({ id, name, register }) => <input type="checkbox" id={id} name={name} {...register(name)} />,
-  radio: ({ id, name, register, options }) =>
-    options?.map((option) => (
-      <div key={option.value}>
-        <input type="radio" id={`${name}-${option.value}`} value={option.value} {...register(name)} />
-        <label htmlFor={`${name}-${option.value}`}>{option.label}</label>
-      </div>
-    )),
-  select: ({ id, name, register, options }) => (
-    <select id={id} name={name} {...register(name)}>
-      {options?.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  ),
-};
-
-interface DynamicFormProps {
-  fields: FormField[];
-  onSubmit: (data: DeepPartial<FieldValues>) => void;
-}
 
 const DynamicForm: React.FC<DynamicFormProps> = ({ fields, onSubmit }) => {
   const schema = z.object(
